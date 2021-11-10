@@ -1,0 +1,7 @@
+**/.DS_Store
+*.tfstate
+*.tfstate.backup
+*.tfstate.*
+**/*.terraform
+**/.terragrunt-cache
+**/*.lock.hcl
