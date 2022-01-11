@@ -8,6 +8,17 @@ variable "gcp_region" {
   type        = string
 }
 
+variable "kubernetes_namespace" {
+  description = "Namespace in which this service account will be used"
+  type        = string
+  default     = null
+}
+
+variable "kubernetes_service_account" {
+  description = "Kubernetes service account that will access this GCP service account"
+  type        = string
+  default     = null
+}
 variable "service_account_description" {
   description = "Description to give the service account"
   type        = string
