@@ -35,14 +35,24 @@ variable "service_account_id" {
   type        = string
 }
 
+variable "service_account_key" {
+  description = "Whether to create a key for this service account"
+  type        = bool
+  default     = false
+}
 variable "service_account_key_type" {
   description = "Type of key to generate for the service account"
   type        = string
   default     = "TYPE_X509_PEM_FILE"
 }
 
-variable "store_key_in_secret_manager" {
-  description = "Whether to store the service account key in Secret Manager"
-  type        = bool
-  default     = true
+variable "service_account_roles" {
+  description = "Roles to assign the service account"
+  type        = list(string)
+  default     = ["roles/secretmanager.secretAccessor"]
+}
+
+variable "terraform_service_account" {
+  description = "Name of the service account to assume to run Terraform"
+  type        = string
 }
