@@ -56,3 +56,9 @@ variable "terraform_service_account" {
   description = "Name of the service account to assume to run Terraform"
   type        = string
 }
+
+variable "assumer_identities" {
+  description = "Emails of service accounts that can assume this service account"
+  type        = list(string)
+  default     = []
+}
