@@ -64,7 +64,7 @@ variable "assumer_identities" {
 }
 
 variable "principals_access" {
-  descdescription = "Map of principles and their roles to give access to the service account"
+  description = "Map of principles and their roles to give access to the service account"
   type = map
   default = {}
 }
