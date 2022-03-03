@@ -1,3 +1,17 @@
+locals {
+  short_service_account_name = element(split("/", google_service_account.sa.id), length(split("/", google_service_account.sa.id)) - 1)
+
+  principals_by_role = flatten([
+    for principle, role in var.principals_access : [
+      for policy in role : {
+        principle = principle
+        role    = policy
+      }
+    ]
+  ])
+
+}
+
 resource "google_service_account" "sa" {
   account_id   = var.service_account_id
   display_name = var.service_account_display_name
@@ -23,10 +37,6 @@ resource "google_service_account_key" "key" {
   public_key_type    = var.service_account_key_type
 }
 
-locals {
-  short_service_account_name = element(split("/", google_service_account.sa.id), length(split("/", google_service_account.sa.id)) - 1)
-}
-
 ### Assumable by other Service Accounts
 resource "google_service_account_iam_member" "assumer" {
   for_each = toset(var.assumer_identities)
@@ -34,4 +44,13 @@ resource "google_service_account_iam_member" "assumer" {
   service_account_id = google_service_account.sa.name
   role               = "roles/iam.serviceAccountTokenCreator"
   member             = "serviceAccount:${each.value}"
+}
+
+resource "google_service_account_iam_member" "principle_acccess" {
+  for_each = {
+    for member in local.principals_by_role : "${member.principle}.${member.role}}" => member
+  }
+  service_account_id = google_service_account.sa.name
+  role               = "roles/${each.value.role}"
+  member             = "serviceAccount:${each.value.principle}"
 }
