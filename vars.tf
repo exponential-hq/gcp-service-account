@@ -11,7 +11,7 @@ variable "gcp_region" {
 variable "workload_identity_users" {
   description = "A list of workload identity users"
   type = list(map(string))
-  default = [ {} ]
+  default = []
 }
 
 variable "service_account_description" {
