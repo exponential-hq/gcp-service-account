@@ -19,11 +19,11 @@ resource "google_service_account" "sa" {
 }
 
 resource "google_service_account_iam_member" "main" {
-  for_each = { for config in var.workload_identity_users : config.gcp_project_id => config }
+  for_each = { for idx, config in var.workload_identity_users : idx => config }
 
   service_account_id = google_service_account.sa.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "serviceAccount:${each.key}.svc.id.goog[${each.value.kubernetes_namespace}/${each.value.kubernetes_service_account}]"
+  member             = "serviceAccount:${each.value.gcp_project_id}.svc.id.goog[${each.value.kubernetes_namespace}/${each.value.kubernetes_service_account}]"
 }
 
 resource "google_project_iam_member" "workload_identity_sa_bindings" {
