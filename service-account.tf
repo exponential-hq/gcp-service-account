@@ -54,5 +54,5 @@ resource "google_service_account_iam_member" "principle_acccess" {
   }
   service_account_id = google_service_account.sa.name
   role               = "roles/${each.value.role}"
-  member             = "serviceAccount:${each.value.principle}"
+  member             = "${each.value.principle}"
 }
