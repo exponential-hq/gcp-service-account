@@ -5,7 +5,7 @@ locals {
     for principle, role in var.principals_access : [
       for policy in role : {
         principle = principle
-        role    = policy
+        role      = policy
       }
     ]
   ])
@@ -54,5 +54,5 @@ resource "google_service_account_iam_member" "principle_acccess" {
   }
   service_account_id = google_service_account.sa.name
   role               = "roles/${each.value.role}"
-  member             = "${each.value.principle}"
+  member             = each.value.principle
 }

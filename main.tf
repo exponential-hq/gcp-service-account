@@ -18,7 +18,7 @@ data "google_service_account_access_token" "default" {
   lifetime               = "1200s"
 }
 
-provider "gcp" {
+provider "google" {
   region          = var.gcp_region
   project         = var.gcp_project_id
   access_token    = data.google_service_account_access_token.default.access_token

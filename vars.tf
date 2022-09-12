@@ -10,8 +10,8 @@ variable "gcp_region" {
 
 variable "workload_identity_users" {
   description = "A list of workload identity users"
-  type = list(map(string))
-  default = []
+  type        = list(map(string))
+  default     = []
 }
 
 variable "service_account_description" {
@@ -60,6 +60,6 @@ variable "assumer_identities" {
 
 variable "principals_access" {
   description = "Map of principles and their roles to give access to the service account"
-  type = map
-  default = {}
+  type        = map(any)
+  default     = {}
 }
